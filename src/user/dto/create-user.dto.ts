@@ -1,4 +1,4 @@
-import { IsEmail, MinLength, MaxLength, Matches, IsString } from "class-validator";
+import { IsEmail, MinLength, MaxLength, Matches, IsString, IsOptional } from "class-validator";
 
 export class CreateUserDto {
   /**
@@ -38,9 +38,9 @@ export class CreateUserDto {
    * @minLength 2
    * @maxLength 255
    * @default 'John Doe'
-   * @nullable
    */
 
   @IsString()
+  @IsOptional()
   name?: string;
 }

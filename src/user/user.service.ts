@@ -36,8 +36,8 @@ export class UserService {
     }));
   }
 
-  findOne(email: string) {
-    const data = this.prisma.user.findUnique({ where: { email } });
+  async findOne(email: string) {
+    const data = await this.prisma.user.findUnique({ where: { email } });
 
     return {
       ...data,
@@ -45,10 +45,13 @@ export class UserService {
     };
   }
 
-  update(email: string, updateUserDto: UpdateUserDto) {
-    const data = this.prisma.user.update({
+  async update(email: string, updateUserDto: UpdateUserDto) {
+    const data = await this.prisma.user.update({
       where: { email },
-      data: updateUserDto,
+      data: {
+        ...updateUserDto,
+        password: updateUserDto.password ? bcrypt.hashSync(updateUserDto.password, 10) : undefined,
+      },
     });
 
     return {
@@ -57,8 +60,8 @@ export class UserService {
     };
   }
 
-  remove(email: string) {
-    const data = this.prisma.user.delete({ where: { email } })
+  async remove(email: string) {
+    const data = await this.prisma.user.delete({ where: { email } })
 
     return {
       ...data,
