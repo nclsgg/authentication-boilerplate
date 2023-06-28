@@ -32,7 +32,6 @@ export class UserService {
 
     return users.map(user => ({
       ...user,
-      password: undefined,
     }));
   }
 
@@ -41,7 +40,6 @@ export class UserService {
 
     return {
       ...data,
-      password: undefined,
     };
   }
 
